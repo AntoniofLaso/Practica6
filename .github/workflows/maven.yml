@@ -1,0 +1,27 @@
+name: Java CI with Maven REST API
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    - name: Configurar JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'     # Usamos Java 21 como definiste en el pom.xml
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Construir con Maven
+      # AQUÍ ESTÁ LA CLAVE: Usamos '--file' para indicar dónde está el pom.xml
+      # ya que no está en la raíz del repositorio, sino dentro de 'LungScanAI'.
+      run: mvn -B package --file LungScanAI/pom.xml
