@@ -22,10 +22,13 @@ jobs:
         cache: maven
 
     - name: Compilar y Ejecutar Tests con JaCoCo
+      # CAMBIO 1: Añadimos working-directory para entrar en la carpeta
+      working-directory: ./LungScanAI
       run: mvn clean jacoco:prepare-agent test install jacoco:report
 
     - name: Subir reporte de cobertura
       uses: actions/upload-artifact@v4
       with:
         name: jacoco-report
-        path: target/site/jacoco/
+        # CAMBIO 2: Ajustamos la ruta para buscar dentro de la carpeta LungScanAI
+        path: LungScanAI/target/site/jacoco/
